@@ -1,16 +1,13 @@
 #!/usr/bin/node
 
-const args = process.argv;
-const values = process.argv.slice(2);
-if (args.length < 4) {
-  console.log('0');
+const args = process.argv.slice(2);
+
+if (args.length === 0) {
+  console.log(0);
+} else if (args.length === 1) {
+  console.log(0);
 } else {
-  for (const x in values) {
-    values[x] = parseInt(values[x]);
-  }
-  values.sort(function (a, b) {
-    return a - b;
-  });
-  values.reverse();
-  console.log(values[1]);
+  const numbers = args.map(Number);
+  const sortedNumbers = numbers.sort((a, b) => b - a);
+  console.log(sortedNumbers[1]);
 }
