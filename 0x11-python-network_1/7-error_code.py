@@ -1,11 +1,16 @@
 #!/usr/bin/python3
-""" displays the body of the response and handel error"""
+"""Python script that fetches https://alx-intranet.hbtn.io/status
+"""
 
 if __name__ == "__main__":
-    import requests
     import sys
-    req = requests.get(sys.argv[1])
-    if (req.ok):
-        print(req.text)
-    else:
+    import requests
+
+    url = sys.argv[1]
+
+    req = requests.get(url)
+
+    if req.status_code >= 400:
         print(f"Error code: {req.status_code}")
+    else:
+        print(req.text)

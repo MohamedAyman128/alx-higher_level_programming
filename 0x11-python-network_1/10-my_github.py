@@ -1,12 +1,22 @@
 #!/usr/bin/python3
-"""display the id variable found in the header of the response."""
+"""this is the api"""
+
 
 if __name__ == "__main__":
-    import requests
     import sys
-    headers = {'Authorization': f'Bearer {sys.argv[2]}',
-               'X-GitHub-Api-Version': '2022-11-28',
-               'Accept': 'application/vnd.github.v3+json'}
-    url = 'https://api.github.com/user'
-    req = requests.get(url, headers=headers)
-    print(req.json().get('id'))
+    import requests
+
+    username = sys.argv[1]
+    password = sys.argv[2]
+    url = f"https://api.github.com/users/{username}"
+    head = {'Accept': 'application/vnd.github+json',
+            'X-GitHub-Api-Version': '2022-11-28',
+            'Authorization': f"Bearer  {password}"}
+    response = requests.get(url, headers=head)
+    if response.status_code == 200:
+        user_data = response.json()
+        user_id = user_data["id"]
+        if user_id:
+            print(user_id)
+    else:
+        print("None")

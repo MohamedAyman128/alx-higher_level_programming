@@ -1,21 +1,23 @@
 #!/usr/bin/python3
-""" sends a POST request to the passed URL with the email as a parameter"""
+"""
+post req to the API 'http://0.0.0.0:5000/search_user'
+"""
 
 if __name__ == "__main__":
     import requests
     import sys
-
-    value = ""
-    if len(sys.argv) > 1:
-        value = sys.argv[1]
-    data = {"q": value}
-    response = requests.post("http://0.0.0.0:5000/search_user", data=data)
+    url = "http://0.0.0.0:5000/search_user"
     try:
-        json_response = response.json()
-        if json_response:
-            print("[{}] {}".format(json_response.get("id"),
-                                   json_response.get("name")))
-        else:
+        params = {'q': sys.argv[1]}
+    except IndexError:
+        print("No result")
+        exit()
+    response = requests.post(url, data=params)
+    try:
+        data = response.json()
+        if len(data) <= 0:
             print("No result")
+        else:
+            print(f"[{data['id']}] {data['name']}")
     except ValueError:
         print("Not a valid JSON")
