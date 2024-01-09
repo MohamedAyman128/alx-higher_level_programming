@@ -1,3 +1,3 @@
 #!/bin/bash
-#displays the size of the body of the response
-curl -s "$1" | wc -c
+# cURL body size
+curl -sI "${1}" | grep "Content-Length" | cut -c 17-

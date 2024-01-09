@@ -1,3 +1,3 @@
 #!/bin/bash
-#displays the body of the response
-curl -s -I -X OPTIONS "$1" | awk '/Allow:/ {print substr($0, 8)}'
+# displays all HTTP methods the server will accept
+curl -si -X OPTIONS   "${1}" | grep "Allow" | cut -c 8-
