@@ -1,20 +1,21 @@
 #!/usr/bin/node
-const request = require('request');
 
-request.get(process.argv[2], (error, resopnse, body) => {
-  if (error) console.log(error);
-  else {
-    const completedTasks = {};
-    const todos = JSON.parse(body);
-    for (const todo of todos) {
-      if (todo.completed) {
-        if (todo.userId in completedTasks) {
-          completedTasks[todo.userId]++;
-        } else {
-          completedTasks[todo.userId] = 1;
-        }
+const request = require('request');
+const URL = process.argv[2];
+
+request(URL, (error, response, body) => {
+  if (error) {
+    console.error(error);
+  } else {
+    const TODOS = {};
+    const RESULTS = JSON.parse(body);
+    RESULTS.map((task) => {
+      if (!Object.prototype.hasOwnProperty.call(TODOS, '' + task.userId)) {
+        if (task.completed) TODOS['' + task.userId] = 0;
       }
-    }
-    console.log(completedTasks);
+      if (task.completed) TODOS['' + task.userId] += 1;
+      return task;
+    });
+    console.log(TODOS);
   }
 });

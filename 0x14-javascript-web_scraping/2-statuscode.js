@@ -1,7 +1,9 @@
 #!/usr/bin/node
-// get request
-const request = require('request');
 
-request.get(process.argv[2], (error, response, body) => {
-  if (!error) console.log('code:', response.statusCode);
+const request = require('request');
+const URL = process.argv[2];
+
+request(URL, (error, response, body) => {
+  console.log(`code: ${response.statusCode}`);
+  if (error) console.error(error);
 });

@@ -1,12 +1,20 @@
 #!/usr/bin/node
+
 const request = require('request');
-request(process.argv[2], function (error, response, body) {
-  if (!error) {
-    const results = JSON.parse(body).results;
-    console.log(results.reduce((count, movie) => {
-      return movie.characters.find((character) => character.endsWith('/18/'))
-        ? count + 1
-        : count;
-    }, 0));
+const URL = process.argv[2];
+const ID = '/people/18';
+
+request(URL, (error, response, body) => {
+  if (error) {
+    console.error(error);
+  } else {
+    const RESULT = JSON.parse(body).results;
+    let totale = 0;
+    RESULT.map((movie) => {
+      const HASCHAR = movie.characters.some(url => url.includes(ID));
+      if (HASCHAR) totale += 1;
+      return movie;
+    });
+    console.log(totale);
   }
 });

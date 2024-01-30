@@ -1,9 +1,11 @@
 #!/usr/bin/node
-// write data in a file from arg
-const fs = require('fs');
 
-if (process.argv.length > 3) {
-  fs.writeFile(process.argv[2], process.argv[3], (error) => {
-    if (error) console.log(error);
-  });
-}
+const fs = require('fs');
+const FILE_NAME = process.argv[2];
+const TEXT = process.argv[3];
+
+fs.writeFile(FILE_NAME, TEXT, 'utf8', (err) => {
+  if (err) {
+    console.error(err);
+  }
+});

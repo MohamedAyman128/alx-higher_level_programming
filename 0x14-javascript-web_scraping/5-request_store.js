@@ -1,15 +1,16 @@
 #!/usr/bin/node
-// write data in a file from web
-const fs = require('fs');
-const request = require('request');
 
-if (process.argv.length > 3) {
-  request.get(process.argv[2], (error, resopnse, body) => {
-    if (error) console.log(error);
-    else {
-      fs.writeFile(process.argv[3], body, 'utf8', (error) => {
-        if (error) console.log(error);
-      });
-    }
-  });
-}
+const request = require('request');
+const fs = require('fs');
+const URL = process.argv[2];
+const FILENAME = process.argv[3];
+
+request(URL, (error, response, body) => {
+  if (error) {
+    console.error(error);
+  } else {
+    fs.writeFile(FILENAME, body, 'utf8', (err) => {
+      if (err) console.error(err);
+    });
+  }
+});
